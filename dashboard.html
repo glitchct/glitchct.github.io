@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - GLITCHNet</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome Back! | Admin Dashboard </h1>
+            <p class="subtitle">View all registered users and the Admin ID</p>
+            <button id="logoutBtn" class="my-button" style="float:right; margin-top:1rem;">Logout</button>
+        </header>
+        <main>
+            <section>
+                <h2>Saved Users</h2>
+                <table id="usersTable" style="width:100%; border-collapse:collapse; background:rgba(255,255,255,0.5); border-radius:8px; margin-top:0.5rem;">
+                    <thead>
+                        <tr style="background:#e3f2fd;">
+                            <th style="padding:0.5rem; border-bottom:1px solid #90caf9;">Username</th>
+                            <th style="padding:0.5rem; border-bottom:1px solid #90caf9;">Password</th>
+                            <th style="padding:0.5rem; border-bottom:1px solid #90caf9;">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userListTable"></tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    <script>
+    // Logout button logic
+    document.getElementById('logoutBtn').onclick = function() {
+        localStorage.removeItem('loggedInUser');
+        window.location.href = 'index.html';
+    };
+
+    // Clear session when browser is closed
+    window.addEventListener('unload', function() {
+        localStorage.removeItem('loggedInUser');
+    });
+    // Require login as admin to view dashboard
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser !== 'admin') {
+        window.location.href = 'index.html';
+    }
+    // Display saved users from localStorage
+    function updateUserList() {
+        const tbody = document.getElementById('userListTable');
+        tbody.innerHTML = '';
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('user_')) {
+                const username = key.replace('user_', '');
+                const password = localStorage.getItem(key);
+                const row = document.createElement('tr');
+                row.innerHTML = `<td style="padding:0.4rem; border-bottom:1px solid #e0e0e0;">${username}</td><td style="padding:0.4rem; border-bottom:1px solid #e0e0e0;">${password}</td><td style="padding:0.4rem; border-bottom:1px solid #e0e0e0;"><button class='my-button' style='background:#d32f2f; padding:0.3rem 0.7rem; font-size:0.9rem;' onclick='promptDeleteUser("${username}")'>Delete</button></td>`;
+                tbody.appendChild(row);
+            }
+        }
+    }
+    updateUserList();
+
+    // Delete user function
+    // Prompt for admin ID before deleting user
+    window.promptDeleteUser = function(username) {
+        const adminId = prompt("Enter Admin ID to delete user ","");
+
+        if (adminId === null) return; // Cancelled
+        if (adminId === 'admin250891') {
+            if (confirm(`Are you sure you want to delete user '${username}'?`)) {
+                localStorage.removeItem('user_' + username);
+                updateUserList();
+            }
+        } else {
+            alert('Incorrect Admin ID. User not deleted.');
+        }
+    }
+    </script>
+</body>
+</html>

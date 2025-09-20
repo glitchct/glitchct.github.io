@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLITCHNet</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <main>
+            <div style="display: flex; gap: 2rem; justify-content: center; align-items: flex-start; flex-wrap: wrap; margin-top: 2rem;">
+                <div style="flex: 1 1 320px; max-width: 350px;">
+                    <form class="login-form" id="loginForm" style="display: flex;">
+                        <h2>Login</h2>
+                        <div class="form-group">
+                            <label for="login-username">Username</label>
+                            <input type="text" id="login-username" name="username" required autocomplete="username" placeholder="Enter your username">
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" name="password" required autocomplete="current-password" placeholder="Enter your password">
+                        </div>
+                        <button type="submit" class="my-button">Login</button>
+                        <p style="text-align:center; margin-top:1rem;">
+                            <a href="#" id="showRegister">Create an account</a>
+                        </p>
+                        <div id="login-error" style="color:#d32f2f; text-align:center; display:none; font-size:0.95rem;"></div>
+                    </form>
+                </div>
+                <div style="flex: 1 1 320px; max-width: 350px;">
+                    <form class="login-form" id="registerForm" style="display: none;">
+                        <h2>Create Account</h2>
+                        <div class="form-group">
+                            <label for="register-username">Username</label>
+                            <input type="text" id="register-username" name="username" required autocomplete="username" placeholder="Choose a username">
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Password</label>
+                            <input type="password" id="register-password" name="password" required autocomplete="new-password" placeholder="Choose a password">
+                        </div>
+                        <div class="form-group">
+                            <label for="register-id">Admin ID</label>
+                            <input type="text" id="register-id" name="adminid" required placeholder="Enter admin ID">
+                        </div>
+                        <button type="submit" class="my-button">Register</button>
+                        <p style="text-align:center; margin-top:1rem;">
+                            <a href="#" id="showLogin">Already have an account?</a>
+                        </p>
+                        <div id="register-error" style="color:#d32f2f; text-align:center; display:none; font-size:0.95rem;"></div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+// Switch between login and register forms
+document.getElementById('showRegister').onclick = function(e) {
+    e.preventDefault();
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'flex';
+};
+document.getElementById('showLogin').onclick = function(e) {
+    e.preventDefault();
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'flex';
+};
+
+// Register logic (demo: store in localStorage)
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const username = document.getElementById('register-username').value.trim();
+    const password = document.getElementById('register-password').value;
+    const adminId = document.getElementById('register-id').value.trim();
+    if (!username || !password || !adminId) return;
+    if (adminId !== 'admin250891') {
+        document.getElementById('register-error').textContent = 'Invalid Admin ID.';
+        document.getElementById('register-error').style.display = 'block';
+        return;
+    }
+    if (localStorage.getItem('user_' + username)) {
+        document.getElementById('register-error').textContent = 'Username already exists.';
+        document.getElementById('register-error').style.display = 'block';
+        return;
+    }
+    localStorage.setItem('user_' + username, password);
+    document.getElementById('register-error').style.display = 'none';
+    alert('Account created! You can now log in.');
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'flex';
+});
+
+// Login logic (demo: check localStorage)
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+    if (!username || !password) return;
+    const stored = localStorage.getItem('user_' + username);
+    if (stored && stored === password) {
+        document.getElementById('login-error').style.display = 'none';
+        localStorage.setItem('loggedInUser', username.toLowerCase());
+        if (username.toLowerCase() === 'admin') {
+            window.location.href = 'dashboard.html';
+        } else {
+            window.location.href = 'homepage.html';
+        }
+    } else {
+        document.getElementById('login-error').textContent = 'Invalid username or password.';
+        document.getElementById('login-error').style.display = 'block';
+    }
+});
+// No delete account logic present. Only login and register forms are available and toggle correctly.
+</script>
+</html>
