@@ -3,41 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Modern Web Page</title>
-
-    <link rel="stylesheet" href="styles.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>GLITCHCT's IWeb Page</title>
 </head>
 <body>
     <header>
-        <div class="logo">MyBrand</div>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="title">GLITCHCT's Website</div>
     </header>
 
     <main>
         <section id="hero" class="hero-section">
-            <h1>Welcome to the Modern Web</h1>
-            <p>A clean, responsive, and semantic starting point for your next project.</p>
-            <a href="#get-started" class="cta-button">Get Started</a>
+            <h1>Welcome to GLITCHCT's Website</h1>
+            <p>On this Website, every created project of GLITCHCT will be displayed here on the website.</p>
+            <a href="#projects" class="cta-button">Get Started</a>
         </section>
 
-        <section id="about" class="content-section">
-            <h2>About Us</h2>
-            <p>We believe in simple, efficient, and user-friendly design. HTML5 provides the backbone for a powerful web experience.</p>
+        <section id="projects" class="content-section">
+            <h2>Projects</h2>
+            <div class="projects-container">
+                <a href="https://modrinth.com/modpack/aerium" class="project-card">
+                    <h3>Aerium</h3>
+                    <p>Aerium is a Minecraft Modpack, which improves your gameplay and quality.</p>
+                </a>
+                <a href="https://modrinth.com/modpack/countinued-ao" class="project-card">
+                    <h3>Advanced Optimized</h3>
+                    <p>A Minecraft Modpack focused on performance and optimization.</p>
+                </a>
+                <div class="project-card coming-soon">
+                    <h3>Coming Soon..</h3>
+                    <p>You will have to wait and see....</p>
+                </div>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Modern Web Page. All rights reserved.</p>
+        <p>&copy; 2025 GLITCHCT. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
